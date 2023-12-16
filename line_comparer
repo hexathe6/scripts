@@ -1,0 +1,24 @@
+#! /usr/bin/python
+
+import sys
+
+a = open(sys.argv[1]).read().split("\n")
+b = open(sys.argv[2]).read().split("\n")
+
+a_ = []
+__ = []
+b_ = []
+
+for _a in a:
+    if(_a in b): __.append(_a)
+    else: a_.append(_a)
+for _b in b:
+    if(_b in __): continue
+    else: b_.append(_b)
+
+for l in __:
+    print "<=> " + l
+for l in a_:
+    print "<-- " + l
+for l in b_:
+    print "--> " + l

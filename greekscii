@@ -1,0 +1,33 @@
+#! /usr/bin/python3
+
+while 1:
+  x = input()
+  out = ""
+  for c in x:
+    if(c == "a"): out += "\u03B1";
+    elif(c == "v"): out += "\u03B2";
+    elif(c == "g"): out += "\u03B3";
+    elif(c == "d"): out += "\u03B4";
+    elif(c == "e"): out += "\u03B5";
+    elif(c == "z"): out += "\u03B6";
+    elif(c == "b"): out += "\u03B7";
+    elif(c == "T"): out += "\u03B8";
+    elif(c == "i"): out += "\u03B9";
+    elif(c == "k"): out += "\u03BA";
+    elif(c == "l"): out += "\u03BB";
+    elif(c == "m"): out += "\u03BC";
+    elif(c == "n"): out += "\u03BD";
+    elif(c == "K"): out += "\u03BE";
+    elif(c == "o"): out += "\u03BF";
+    elif(c == "p"): out += "\u03C0";
+    elif(c == "r"): out += "\u03C1";
+    elif(c == "S"): out += "\u03C2";
+    elif(c == "s"): out += "\u03C3";
+    elif(c == "t"): out += "\u03C4";
+    elif(c == "u"): out += "\u03C5";
+    elif(c == "f"): out += "\u03C6";
+    elif(c == "x"): out += "\u03C7";
+    elif(c == "P"): out += "\u03C8";
+    elif(c == "w"): out += "\u03C9";
+    else: out += c
+  print(out)

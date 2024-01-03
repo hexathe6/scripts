@@ -1,0 +1,7 @@
+#! /bin/bash
+
+# similar to randline_of_randfile but specific to my needs and setup
+file=`lsrf_fdn | randline`
+echo -n $file | sed "s/.*\///g" | tr "_" " " | sed "s/.lyric//g" | sed "s/   / (/g" | sed "s/  /, /g"
+echo ")"
+cat $file | sed -z "s/\n\n/\n/g" | randline

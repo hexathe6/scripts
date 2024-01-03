@@ -1,0 +1,3 @@
+#! /bin/sh
+
+cat `lsrf_fdn | randline` | randline

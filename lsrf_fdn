@@ -1,0 +1,11 @@
+#! /bin/bash
+
+if [[ `shopt globstar | sed "s/.* //g" | sed "s/\s//g"` == "off" ]]
+then globstar=0
+fi
+
+shopt -s globstar
+
+ls -dF1 "$PWD"/** | grep -vx ".*/" | sed "s/*$//g" | sed "s/@$//g"
+
+if [[ $globstar == 0 ]]; then shopt -u globstar; fi

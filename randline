@@ -1,0 +1,7 @@
+#! /bin/sh
+
+# use:
+#   cmd | randline
+
+# using `sed -z "s/\n.*/\n/g"` appears to be faster than `shuf -n 1`
+shuf | sed -z "s/\n.*/\n/g"

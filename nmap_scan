@@ -1,0 +1,10 @@
+#! /usr/bin/python3
+
+import sys, os
+
+cmd = "nmap -sP "
+
+for a in sys.argv[1:]:
+  cmd += "192.168."+a+".0/24 "
+
+os.system(cmd)

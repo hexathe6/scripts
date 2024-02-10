@@ -1,0 +1,19 @@
+#! /bin/bash
+
+if [[ $# -lt 2 ]]
+then
+  echo "usage: foreach_arg delimiter command [substitutions]"
+fi
+
+del=$1
+shift
+cmd=$1
+shift
+do="echo -n"
+for var in "$@"
+do
+  var=`echo $var | perl -e "s/\//\\\//g"`
+  #do=$do" ; "`echo "$cmd" | sed -e "s/$del/"$var"/g"`
+  echo `echo "$cmd" | sed -e "s/$del/"$var"/g"` | bash -s
+done
+#echo $do | bash -s

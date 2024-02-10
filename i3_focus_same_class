@@ -1,0 +1,29 @@
+#! /bin/bash
+
+if [ ! -f /tmp/i3_focus_same_class_hexconv ]
+then
+  echo -e "#include <stdio.h>\n#include <stdlib.h>\nvoid main() {char* line;size_t len=0;getline(&line,&len,fopen(\"/dev/stdin\",\"r\"));printf(\"%x\\\n\",atoi(line));}" > /tmp/i3_focus_same_class_hexconv.c
+  gcc /tmp/i3_focus_same_class_hexconv.c -o /tmp/i3_focus_same_class_hexconv
+  rm /tmp/i3_focus_same_class_hexconv.c
+fi
+
+get_class ()
+{
+  wmctrl -lx | sed "s/0x0/0x/g" | grep `xdotool getwindowfocus | /tmp/i3_focus_same_class_hexconv` | sed -r "s/ +/ /g" | cut -d " " -f 3 | sed -r "s/.*?\.//g"
+}
+
+class=`get_class`
+nclass=""
+i=0
+
+while [[ $i -lt 25 ]]
+do
+  ((i++))
+  if [[ !( $class == $nclass ) ]]
+  then
+    i3-msg "focus $1"
+  else
+    break
+  fi
+  nclass=`get_class`
+done

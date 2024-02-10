@@ -1,0 +1,63 @@
+#! /usr/bin/python
+
+import sys, math
+
+args = sys.argv[1:]
+
+scr_x = 0
+def get_termsize():
+    global scr_x
+    import struct, fcntl, termios
+    x = struct.unpack("HH",fcntl.ioctl(0,termios.TIOCGWINSZ,"    "))
+    scr_x = x[1]
+get_termsize()
+scr_x = float(scr_x)
+
+def mixrgb(a,b,amt):
+    return [a[0]*(1-amt) + b[0]*amt,a[1]*(1-amt) + b[1]*amt,a[2]*(1-amt) + b[2]*amt]
+
+def codify(c):
+    return "#%2x%2x%2x" % (max(c[0],0),max(c[1],0),max(c[2],0))
+
+def hexcode(s,bg=0):
+    try:
+        if(len(s) in [3,6]): s = '#' + s
+        if(len(s) not in [4,7]): raise
+        x = s[1:]
+        if(len(x) == 3):
+            return hexcode('#' + x[0]*2 + x[1]*2 + x[2]*2,bg)
+        if(bg == 2):
+            return [int(x[0:2],16),int(x[2:4],16),int(x[4:6],16)]
+        out = "\x1b["
+        if(bg): out += "48"
+        else: out += "38"
+        out += ";2;"
+        out += "%d;%d;%dm" % (int(x[0:2],16),int(x[2:4],16),int(x[4:6],16))
+        return out
+    except:
+        return ''
+
+stops = []
+for i in xrange(0,len(args)):
+    if(not i%2):
+        stops.append(float(args[i]))
+bstop = stops[-1]
+#for i in xrange(0,len(stops)):
+#    stops[i] /= stops[-1]
+        
+cols = []
+for i in xrange(0,len(args)):
+    if(i%2):
+        arg = args[i]
+        if(len(arg) not in [3,4,6,7]): raise ValueError("invalid color?")
+        cols.append(hexcode(arg,2))
+
+for i in xrange(0,int(scr_x)):
+    stop = 0
+    for j in xrange(0,len(stops)):
+        if(i/scr_x < stops[j]/bstop):
+            stop = j-1
+            break
+    sys.stdout.write("%s " % ( hexcode( codify( mixrgb( cols[stop],cols[stop+1], (bstop/max(stops[stop+1]-stops[stop],0.01))*(i/scr_x - stops[stop]/bstop) ) ),1) ) )
+        
+print('\x1b[0m')

@@ -1,0 +1,4 @@
+#! /bin/bash
+
+cat $1 | line_alternation 1 > $1_2
+mv $1_2 $1

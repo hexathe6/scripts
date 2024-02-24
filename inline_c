@@ -1,0 +1,14 @@
+#! /bin/bash
+
+var=
+
+for v in "$@"
+do
+  var=$var$v$'\n'
+done
+
+echo "$var" > /tmp/inline_c.c
+gcc /tmp/inline_c.c -o /tmp/inline_c
+rm /tmp/inline_c.c
+/tmp/inline_c
+rm /tmp/inline_c

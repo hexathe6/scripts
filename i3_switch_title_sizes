@@ -1,0 +1,12 @@
+#! /bin/bash
+
+p=~/.config/i3
+
+# swap t1 and t2
+mv $p/t1 $p/tt
+mv $p/t2 $p/t1
+mv $p/tt $p/t2
+
+cat $p/preconfig $p/t1 > $p/config
+
+i3-msg "restart"
